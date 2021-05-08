@@ -1,0 +1,19 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: CUGBer
+  datasource:
+    druid:
+      password: jts123hhh
+      username: CUGBerAdmin
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://localhost:3306/CUGBer?characterEncoding=utf-8&&useUnicode=true
+  redis:
+    port: 6379
+    host: localhost
+    database: 0
+#debug: true
+logging:
+  level:
+    edu.cugb.jts.cugber: debug
