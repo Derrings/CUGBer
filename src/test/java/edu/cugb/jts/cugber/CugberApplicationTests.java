@@ -1,6 +1,8 @@
 package edu.cugb.jts.cugber;
 
+import edu.cugb.jts.cugber.common.SystemTimeLimit;
 import edu.cugb.jts.cugber.pojo.dao.User;
+import edu.cugb.jts.cugber.util.TimeUtil;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,6 +15,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.concurrent.TimeUnit;
 
 @SpringBootTest
 class CugberApplicationTests {
@@ -22,7 +25,7 @@ class CugberApplicationTests {
     @Resource
     RedisTemplate<String, Object> redisTemplate;
 
-    // 测试数据源是否有效
+    // To test whether data source is effective.
     @Test
     void contextLoads() throws SQLException {
         System.out.println(dataSource.getClass());
@@ -33,12 +36,18 @@ class CugberApplicationTests {
             System.out.println(resultSet.getString(3));
         }
     }
-
     @Test
     void redisTemplateTest() {
         ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
         opsForValue.set("zhaoshuai", new User("zhaoshuai", "男", true));
         System.out.println(opsForValue.get("zhaoshuai"));
+    }
+
+    @Test
+    void utilsTest() {
+        System.out.println(Integer.MAX_VALUE);
+        new SystemTimeLimit.SysTime(30, TimeUnit.HOURS).calculateMilliSeconds();
+        TimeUtil.nowToMidNight();
     }
 
 }
