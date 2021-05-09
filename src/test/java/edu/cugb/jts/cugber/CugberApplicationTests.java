@@ -1,9 +1,11 @@
 package edu.cugb.jts.cugber;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.cugb.jts.cugber.common.SystemTimeLimit;
-import edu.cugb.jts.cugber.pojo.dao.User;
+import edu.cugb.jts.cugber.pojo.dto.UserTokenInf;
+import edu.cugb.jts.cugber.util.AESUtil;
 import edu.cugb.jts.cugber.util.TimeUtil;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,9 +23,12 @@ import java.util.concurrent.TimeUnit;
 class CugberApplicationTests {
     @Resource
     DataSource dataSource;
-
+    @Resource
+    private ObjectMapper objectMapper;
     @Resource
     RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    AESUtil aesUtil;
 
     // To test whether data source is effective.
     @Test
@@ -36,18 +41,18 @@ class CugberApplicationTests {
             System.out.println(resultSet.getString(3));
         }
     }
-    @Test
-    void redisTemplateTest() {
-        ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
-        opsForValue.set("zhaoshuai", new User("zhaoshuai", "男", true));
-        System.out.println(opsForValue.get("zhaoshuai"));
-    }
 
     @Test
     void utilsTest() {
         System.out.println(Integer.MAX_VALUE);
         new SystemTimeLimit.SysTime(30, TimeUnit.HOURS).calculateMilliSeconds();
         TimeUtil.nowToMidNight();
+    }
+
+    @Test
+    void AESEncoder() {
+        String secret = aesUtil.AESEncode("asdf", new UserTokenInf());
+        aesUtil.AESDecode("klk", secret, UserTokenInf.class);
     }
 
 }

@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @author Derrings
  */
 @Slf4j
-public abstract class AutoCleaner extends Thread{
+public abstract class AbstractAutoCleaner extends Thread{
     private SystemTimeLimit.SysTime doItTime = null;
     protected abstract void clean();
 

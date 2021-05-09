@@ -15,8 +15,22 @@
     <description>CUGBer - An information published platform, used by CUGB students.</description>
     <properties>
         <java.version>1.8</java.version>
+        <jjwt.version>0.11.2</jjwt.version>
     </properties>
     <dependencies>
+        <!--===============================================================================-->
+        <!--###########################          jwt            ###########################-->
+        <!--===============================================================================-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>${jjwt.version}</version>
+        </dependency>
         <!--===============================================================================-->
         <!--###########################         utils           ###########################-->
         <!--===============================================================================-->
@@ -50,10 +64,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
         <!--===============================================================================-->
         <!--###########################      springboot         ###########################-->
         <!--===============================================================================-->
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
