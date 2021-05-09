@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserTokenInf {
-    private boolean identity;
+    private boolean admin;
     private int id;
     private int authority;
 }

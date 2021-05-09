@@ -18,7 +18,7 @@ public class SystemTimeLimit {
             long millis = unit.toMillis(time);
             log.debug(millis + "");
             return millis;
-        };
+        }
     }
     // Default system time limit.
     public final static SysTime DEFAULT_LOSE_REMAINING_TIME = new SysTime(30, TimeUnit.DAYS);
@@ -27,5 +27,4 @@ public class SystemTimeLimit {
     public final static SysTime DEFAULT_ADMIN_BEHAVIOUR_LOG_REMAINING_TIME = new SysTime(365, TimeUnit.DAYS);
     public final static SysTime DEFAULT_USER_FEEDBACK_REMAINING_TIME = new SysTime(365, TimeUnit.DAYS);
     public final static SysTime USER_TOKEN_REMAINING_TIME = new SysTime(10, TimeUnit.HOURS);
-
 }

@@ -43,6 +43,12 @@ class CugberApplicationTests {
     }
 
     @Test
+    void redisTest() {
+        redisTemplate.opsForValue().set(12 + "", new UserTokenInf());
+        System.out.println(redisTemplate.opsForValue().get(13 + ""));
+        System.out.println(redisTemplate.opsForValue().get(12 + ""));
+    }
+    @Test
     void utilsTest() {
         System.out.println(Integer.MAX_VALUE);
         new SystemTimeLimit.SysTime(30, TimeUnit.HOURS).calculateMilliSeconds();
