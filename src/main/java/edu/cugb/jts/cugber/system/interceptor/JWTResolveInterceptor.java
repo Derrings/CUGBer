@@ -12,8 +12,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.annotation.Resource;
 import javax.crypto.SecretKey;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * The token contains users' information, to make it safe all tokens are
@@ -36,12 +38,13 @@ public class JWTResolveInterceptor implements HandlerInterceptor {
 
     // Resolving token and put user information into servlet request.
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("Request process to " + request.getRequestURL());
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException, IOException {
+        log.debug("Request process to " + request.getRequestURL());
         String tokenStr = request.getHeader("token");
         // Request do not have a token.
         if (tokenStr == null) {
             log.debug("Request processing to " + request.getRequestURL() + " have no token.");
+            request.getRequestDispatcher("/403").forward(request, response);
             return false;
         }
         Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(tokenStr).getBody();
@@ -50,6 +53,7 @@ public class JWTResolveInterceptor implements HandlerInterceptor {
         // Cannot find the uuid or uuid have lost efficacy.
         if (AESSecret == null) {
             log.debug("UUID:" + UUID + " have lost its efficacy.");
+            request.getRequestDispatcher("/403").forward(request, response);
             return false;
         }
         String usrInf = (String) claims.get(SystemStrings.TOKEN_USER_INFORMATION);
@@ -60,6 +64,7 @@ public class JWTResolveInterceptor implements HandlerInterceptor {
             return true;
         } else {
             log.debug("UUID:" + UUID + " do not have correct key.");
+            request.getRequestDispatcher("/403").forward(request, response);
             return false;
         }
     }

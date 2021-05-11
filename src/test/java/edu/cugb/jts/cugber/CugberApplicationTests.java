@@ -57,8 +57,9 @@ class CugberApplicationTests {
 
     @Test
     void AESEncoder() {
-        String secret = aesUtil.AESEncode("asdf", new UserTokenInf());
-        aesUtil.AESDecode("klk", secret, UserTokenInf.class);
+        String secretKey = aesUtil.randomSecretGenerator();
+        String secret = aesUtil.AESEncode(secretKey, new UserTokenInf());
+        aesUtil.AESDecode(secretKey, secret, UserTokenInf.class);
     }
 
 }
